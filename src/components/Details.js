@@ -14,6 +14,7 @@ export default class Details extends Component {
             img,
             info,
             price,
+            comments,
             title,
             inCart
           } = value.detailProduct;
@@ -37,7 +38,7 @@ export default class Details extends Component {
                   </h4>
                   <h4 className="text-blue">
                     <strong>
-                      price : <sapan>$</sapan>
+                      price : <span>$</span>
                       {price}
                     </strong>
                   </h4>
@@ -51,13 +52,35 @@ export default class Details extends Component {
                       <ButtonContainer>back To Product</ButtonContainer>
                     </Link>
                     <ButtonContainer
-                      disable={inCart ? true : false}
+                      // disable={inCart ? true : false}
                       onClick={() => {
-                        value.addToCart(id);
+                        inCart ? value.removeItem(id) : value.addToCart(id);
                       }}
                     >
-                      {inCart ? "inCart" : "add to cart"}
+                      {inCart ? (
+                        <span>Remove from Cart</span>
+                      ) : (
+                        <span>add cart</span>
+                      )}
                     </ButtonContainer>
+                    <h3 className="text-blue">comments:</h3>
+                    <div>
+                      {comments.map(comment => {
+                        return (
+                          <div>
+                            <h5>{comment.name}:</h5>
+                            <p className="text-title text-muted  ">
+                              {comment.message}
+                            </p>
+                            <div>
+                              <span>
+                                <p>{value.average(comments).averageValue} ⭐</p>
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
